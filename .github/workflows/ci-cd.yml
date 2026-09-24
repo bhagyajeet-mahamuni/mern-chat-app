@@ -87,7 +87,7 @@ jobs:
     steps:
       - name: Deploy Application
         run: |
-          cd ~/Docker-Practice/mern-chat-app
+          cd ~/mern-chat-app
           docker compose pull
           docker compose up -d --force-recreate
 
