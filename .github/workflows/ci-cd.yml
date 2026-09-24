@@ -46,6 +46,7 @@ jobs:
 #
 
   Build-and-push: ## This will build the docker images and push them on Dockerhub
+    needs: test-and-build
     runs-on: ubuntu-latest
 
 
