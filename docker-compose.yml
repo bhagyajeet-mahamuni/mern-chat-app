@@ -1,0 +1,63 @@
+
+## This is docker-compose file for mern-chat-app
+#
+
+services:
+
+  frontend:
+    image:
+      bhagyajeet/mern-chat-app-frontend:latest
+    container_name: mern-chat-app-frontend
+    ports:
+      - "3000:3000"
+
+    networks:
+      - mern-chat-network
+    depends_on:
+      - backend
+
+
+##------------------------------------------ 
+
+
+  backend:
+    image:
+      bhagyajeet/mern-chat-app-backend:latest
+    container_name: mern-chat-app-backend
+    ports:
+      - "5000:5000"
+
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      MONGO_DB_URI: ${MONGO_DB_URI}
+    depends_on:
+      - Db
+    networks:
+      - mern-chat-network
+
+
+##-------------------------------------------
+
+
+  Db:
+    image: mongo:7
+    container_name: mern-chat-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - mern-chat-network
+
+##------------------------------------------
+
+
+networks:
+  mern-chat-network:
+
+volumes:
+  mongo-data:
