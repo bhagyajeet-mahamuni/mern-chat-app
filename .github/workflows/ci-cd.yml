@@ -1,0 +1,45 @@
+#
+## Goal - The goal of this file is to create workflows for code, build and deploy the mern-chat-app which is already dockerized.
+#
+
+name: mern-chat-app-CI-CD-workflow
+
+on:
+  push:
+    branches:
+      master
+
+
+jobs:
+
+  ## CI [ Continous integrations ]
+
+  test-and-build:
+    runs-on: ubuntu-latest
+  
+
+    steps:
+
+      - name: checkout the code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install root depenendencies
+        run: npm install
+
+      - name: Install frontend dependencies
+        run: npm install
+        working-directory: frontend
+
+      - name: Install backend dependencies
+        run: npm install
+        working-directory: backend
+
+      - name: Build the application
+        run: npm run build
+
+
