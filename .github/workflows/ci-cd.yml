@@ -61,7 +61,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Generate the backend docker image
-        run:  docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mern-chat-app-backend:latest -f /backend/Dockerfile .
+        run:  docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mern-chat-app-backend:latest -f backend/Dockerfile .
 
       - name: Generate the frontend docker image
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mern-chat-app-frontend:latest ./frontend 
