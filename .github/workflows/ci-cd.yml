@@ -42,4 +42,37 @@ jobs:
       - name: Build the application
         run: npm run build
 
+##===========================================================
+#
+
+  Build-and-push: ## This will build the docker images and push them on Dockerhub
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - name: checkout the code
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v4
+        with:
+          username: ${secret.DOCKERHUB_USERNAME}
+          password: ${secret.DOCKERHUB_TOKEN}
+
+      - name: Generate the backend docker image
+        run:  docker build -t ${{ secret.DOCKERHUB_USERNAME }}/mern-chat-app-backend:latest ./backend
+
+      - name: Generate the frontend docker image
+        run: docker build -t ${{ secret.DOCKERHUB_TOKEN }}/mern-chat-app-frontend:latest ./frontend
+
+      - name: Push the backend docker image to DockerHUb
+        run: docker push ${{ secret.DOCKERHUB_USERNAMR }}/mern-chat-app-backend:latest
+
+      - name: Push the frontend docker image to the DockerHUb
+        run:  docker push ${{ secret.DOCKERHUB_TOKEN }}/mern-chat-app-frontend:latest
+
+
+
+
 
